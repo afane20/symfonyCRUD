@@ -1,3 +1,7 @@
 _errors:
     resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
     prefix: /_error
+
+app_lucky_number:
+    path: /lucky/number
+    controller: App\Controller\UserController::index
