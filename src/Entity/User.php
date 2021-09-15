@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,11 +29,16 @@ class User
     /** @ORM\Column(type="string") */
     private $role;
 
-    /** @ORM\Column(type="string") */
-    private $password;
-
-    /** @ORM\Column(type="datetime", name="posted_at") */
+    /**
+     *  @ORM\Column(type="datetime", name="posted_at",  options={"default" : new Date()->now}) */
     private $postedAt;
+
+
+
+    public function __construct()
+    {
+        $this->postedAt = new DateTime(); 
+    }
 
     public function getId(): ?int
     {
@@ -95,28 +101,6 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
-
-        return $this;
-    }
-
-  
-
-    /**
-     * Get the value of password
-     */ 
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the value of password
-     *
-     * @return  self
-     */ 
-    public function setPassword($password)
-    {
-        $this->password = $password;
 
         return $this;
     }

@@ -6,5 +6,58 @@
 
 {% block body %}
 
-<h1>heelllo  {{message}}<h1>
+<div class="container-fluid mt-4">
+<!-- Button trigger modal -->
+<a href="/user/create" class="btn btn-primary">
+  + user
+</a>
+</div>
+
+{# Table #}
+<div class="container">
+
+<table id="users" class="table caption-top">
+  <caption>List of users</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col">created At</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if users|length > 0 %}
+  {% for user in users %}
+    <tr>
+      <th scope="row" >{{user.id}}</th>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ user.postedAt |date('Y-m-d H:i:s') }}</td>
+      <td>
+       <a href="/user/update/{{user.id}}" class="btn btn-primary">Edit</a>
+      <a href="#" data-id="{{ user.id }}" class="btn btn-danger delete-user">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <th>
+    <td>
+    Records not found
+    </td>
+    </th>
+    {% endif %}
+  </tbody>
+</table>
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="/js/user/delete.js"></script>
 {% endblock %}
