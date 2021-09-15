@@ -19,6 +19,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserController extends AbstractController
 {
+
+
+    public function home()
+    {
+        return $this->render('home.html.twig');
+    }
+
     /**
      * @Route("/")
      * @Method({"GET"})
