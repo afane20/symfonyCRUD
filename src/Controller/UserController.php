@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use UserFacade as UserFacadeLocal;
+
 class UserController extends AbstractController
 {
 
@@ -32,7 +34,9 @@ class UserController extends AbstractController
      */
     public function index()
     {
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $userFacade  = new UserFacadeLocal($this->getDoctrine()->getManager(),User::class);
+        $users = $userFacade->getAllUsers();
+
         return $this->render('users/user.html.twig', [
             'users' => $users
         ]);
@@ -57,9 +61,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $newUser = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($newUser);
-            $em->flush();
+            $userFacade  = new UserFacadeLocal($this->getDoctrine()->getManager(),User::class);
+            $userFacade->createUser($newUser);
             return $this->redirectToRoute('view_users');
         }
 
@@ -69,12 +72,10 @@ class UserController extends AbstractController
 
     public function remove(Request $request, $id)
     {
-        $user = $this->getDoctrine()->getRepository(
-            User::class
-        )->find($id);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
+
+        $userFacade  = new UserFacadeLocal($this->getDoctrine()->getManager(),User::class);
+        $user = $userFacade->deleteUser($id);
+
         $response = new Response();
         $response->send();
     }
@@ -84,9 +85,9 @@ class UserController extends AbstractController
     {
 
         $user = new User();
-        $user = $this->getDoctrine()->getRepository(
-            User::class
-        )->find($id);
+        $userFacade  = new UserFacadeLocal($this->getDoctrine()->getManager(),User::class);
+        $user = $userFacade->getUser($id);
+       
         $form = $this->createFormBuilder($user)
             ->add('name', TextType::class, ['attr' =>
             ['class' => 'form-control mt-2 mb-1']])
@@ -102,8 +103,7 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            $userFacade->editUser($user);
             return $this->redirectToRoute('view_users');
         }
 
