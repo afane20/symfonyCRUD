@@ -51,7 +51,8 @@ class UserController extends AbstractController
             ->add('email', TextType::class, ['attr' =>
             ['class' => 'form-control mt-2 mb-1']])
             ->add('role', TextType::class, ['attr' =>
-            ['class' => 'form-control mt-2 mb-1']])
+            ['class' => 'form-control mt-2 mb-1'],
+            'label'=>'Rol'])
             ->add('save', SubmitType::class, [
                 'label' => 'create',
                 'attr' => ['class' => 'btn btn-primary mt-2 mb-2']
@@ -94,7 +95,8 @@ class UserController extends AbstractController
             ->add('email', TextType::class, ['attr' =>
             ['class' => 'form-control mt-2 mb-1']])
             ->add('role', TextType::class, ['attr' =>
-            ['class' => 'form-control mt-2 mb-1']])
+            ['class' => 'form-control mt-2 mb-1'],
+            'label'=>'Rol'])
             ->add('save', SubmitType::class, [
                 'label' => 'update',
                 'attr' => ['class' => 'btn btn-primary mt-2 mb-2']
