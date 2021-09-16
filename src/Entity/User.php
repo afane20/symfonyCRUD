@@ -30,7 +30,7 @@ class User
     private $role;
 
     /**
-     *  @ORM\Column(type="datetime", name="posted_at",  options={"default" : new Date()->now}) */
+     *  @ORM\Column(type="datetime", name="posted_at") */
     private $postedAt;
 
 
